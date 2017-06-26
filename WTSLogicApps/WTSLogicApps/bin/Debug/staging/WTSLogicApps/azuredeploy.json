@@ -90,6 +90,24 @@
         "description": "Location of the Logic App."
       }
     },
+    "EchoApiKenyaAuth": {
+      "type": "string"
+    },
+    "EchoApiKenyaPassword": {
+      "type": "string"
+    },
+    "EchoApiKenyaEid": {
+      "type": "string"
+    },
+    "EchoApiTanzaniaAuth": {
+      "type": "string"
+    },
+    "EchoApiTanzaniaPassword": {
+      "type": "string"
+    },
+    "EchoApiTanzaniaEid": {
+      "type": "string"
+    },
     "azureblob_1_Connection_Name": {
       "type": "string",
       "defaultValue": "BlobStorageConnection"
@@ -540,11 +558,11 @@
                       }
                     },
                     "body": {
-                      "auth": "*** SPECIFY_AUTH_FOR_KENYA ***",
-                      "eid": "*** SPECIFY_EID_FOR_KENYA ***",
+                      "auth": "@parameters('$echoapiconfigs')['kenya']['auth']",
+                      "eid": "@parameters('$echoapiconfigs')['kenya']['eid']",
                       "max": 200,
                       "page": "@variables('requestPageKenya')",
-                      "password": "*** SPECIFY_PASSWORD_FOR_KENYA ***",
+                      "password": "@parameters('$echoapiconfigs')['kenya']['password']",
                       "since": "@variables('unixLastExecTime')",
                       "source": 5,
                       "until": "@variables('unixCurrentDatetime')"
@@ -613,11 +631,11 @@
                       }
                     },
                     "body": {
-                      "auth": "*** SPECIFY_AUTH_FOR_TANZANIA ***",
-                      "eid": "*** SPECIFY_EID_FOR_TANZANIA ***",
+                      "auth": "@parameters('$echoapiconfigs')['tanzania']['auth']",
+                      "eid": "@parameters('$echoapiconfigs')['tanzania']['eid']",
                       "max": 200,
                       "page": "@variables('requestPageTanzania')",
-                      "password": "*** SPECIFY_PASSWORD_FOR_TANZANIA ***",
+                      "password": "@parameters('$echoapiconfigs')['tanzania']['password']",
                       "since": "@variables('unixLastExecTime')",
                       "source": 5,
                       "until": "@variables('unixCurrentDatetime')"
@@ -746,6 +764,10 @@
             "$connections": {
               "defaultValue": {},
               "type": "Object"
+            },
+            "$echoapiconfigs": {
+              "defaultValue": {},
+              "type": "Object"
             }
           },
           "triggers": {
@@ -767,6 +789,20 @@
                 "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', parameters('ProcessSMSMsgsLocation'), '/managedApis/', 'azureblob')]",
                 "connectionId": "[resourceId('Microsoft.Web/connections', parameters('azureblob_1_Connection_Name'))]",
                 "connectionName": "[parameters('azureblob_1_Connection_Name')]"
+              }
+            }
+          },
+          "$echoapiconfigs": {
+            "value": {
+              "kenya": {
+                "auth": "[parameters('EchoApiKenyaAuth')]",
+                "password": "[parameters('EchoApiKenyaPassword')]",
+                "eid": "[parameters('EchoApiKenyaEid')]"
+              },
+              "tanzania": {
+                "auth": "[parameters('EchoApiTanzaniaAuth')]",
+                "password": "[parameters('EchoApiTanzaniaPassword')]",
+                "eid": "[parameters('EchoApiTanzaniaEid')]"
               }
             }
           }

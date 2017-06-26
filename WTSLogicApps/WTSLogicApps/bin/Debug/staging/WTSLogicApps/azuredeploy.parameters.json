@@ -10,6 +10,9 @@
     },
     "ProcessSMSMsgsName": {
       "value": "ProcessSMSMsgs"
+    },
+    "EchoApiKenyaAuth": {
+      "value": ""
     }
   }
 }
