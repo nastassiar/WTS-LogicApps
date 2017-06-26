@@ -50,6 +50,12 @@
       "type": "string",
       "defaultValue": "ServiceBusConnection"
     },
+    "servicebus_1_connectionString": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Azure Service Bus Connection String"
+      }
+    },
     "ProcessSMSMsgsName": {
       "type": "string",
       "minLength": 1,
@@ -372,7 +378,9 @@
           "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', parameters('PollSMSMsgLocation'), '/managedApis/', 'servicebus')]"
         },
         "displayName": "[parameters('servicebus_1_Connection_DisplayName')]",
-        "parameterValues": {}
+        "parameterValues": {
+          "connectionString": "[parameters('servicebus_1_ConnectionString')]"
+        }
       }
     },
     {
@@ -548,6 +556,9 @@
                       "since": "@variables('unixLastExecTime')",
                       "source": 5,
                       "until": "@variables('unixCurrentDatetime')"
+                    },
+                    "retryPolicy": {
+                      "type": "none"
                     }
                   },
                   "runAfter": {}
@@ -621,6 +632,9 @@
                       "since": "@variables('unixLastExecTime')",
                       "source": 5,
                       "until": "@variables('unixCurrentDatetime')"
+                    },
+                    "retryPolicy": {
+                      "type": "none"
                     }
                   },
                   "runAfter": {}
