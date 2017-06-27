@@ -42,6 +42,21 @@
         "description": "Location of the Logic App."
       }
     },
+    "FunctionAppName": {
+      "type": "string"
+    },
+    "GetCurrentDatetimeUnix_FunctionName": {
+      "type": "string",
+      "defaultValue": "GetCurrentDatetimeUnix"
+    },
+    "PollSMSSurveys_FunctionName": {
+      "type": "string",
+      "defaultValue": "PollSMSSurveys"
+    },
+    "PollSMSMsg_FunctionName": {
+      "type": "string",
+      "defaultValue": "PollSMSMsg"
+    },
     "ServiceBusConnectionName": {
       "type": "string",
       "defaultValue": "ServiceBusConnection"
@@ -623,7 +638,7 @@
                     "host": {
                       "triggerName": "manual",
                       "workflow": {
-                        "id": "/subscriptions/dc72a57c-74e5-475e-9f09-46f912070bf9/resourceGroups/WellToldStory/providers/Microsoft.Logic/workflows/PollSMSMsg"
+                        "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Logic/workflows/', parameters('PollSMSMsg_FunctionName'))]"
                       }
                     },
                     "body": {
@@ -699,7 +714,7 @@
                     "host": {
                       "triggerName": "manual",
                       "workflow": {
-                        "id": "/subscriptions/dc72a57c-74e5-475e-9f09-46f912070bf9/resourceGroups/WellToldStory/providers/Microsoft.Logic/workflows/PollSMSMsg"
+                        "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Logic/workflows/', parameters('PollSMSMsg_FunctionName'))]"
                       }
                     },
                     "body": {
@@ -801,7 +816,7 @@
               "inputs": {
                 "body": {},
                 "function": {
-                  "id": "/subscriptions/dc72a57c-74e5-475e-9f09-46f912070bf9/resourceGroups/WellToldStory/providers/Microsoft.Web/sites/WTSFunctions-dev/functions/GetCurrentDatetimeUnix"
+                  "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/sites/', parameters('FunctionAppName'), '/functions/', parameters('GetCurrentDatetimeUnix_FunctionName'))]"
                 }
               },
               "runAfter": {
@@ -1348,7 +1363,7 @@
                     "host": {
                       "triggerName": "manual",
                       "workflow": {
-                        "id": "/subscriptions/dc72a57c-74e5-475e-9f09-46f912070bf9/resourceGroups/WellToldStory/providers/Microsoft.Logic/workflows/PollSMSSurveys"
+                        "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Logic/workflows/', parameters('PollSMSSurveys_FunctionName'))]"
                       }
                     },
                     "body": {
@@ -1425,7 +1440,7 @@
                     "host": {
                       "triggerName": "manual",
                       "workflow": {
-                        "id": "/subscriptions/dc72a57c-74e5-475e-9f09-46f912070bf9/resourceGroups/WellToldStory/providers/Microsoft.Logic/workflows/PollSMSSurveys"
+                        "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Logic/workflows/', parameters('PollSMSSurveys_FunctionName'))]"
                       }
                     },
                     "body": {
@@ -1507,7 +1522,7 @@
               "inputs": {
                 "body": {},
                 "function": {
-                  "id": "/subscriptions/dc72a57c-74e5-475e-9f09-46f912070bf9/resourceGroups/WellToldStory/providers/Microsoft.Web/sites/WTSFunctions-dev/functions/GetCurrentDatetimeUnix"
+                  "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/sites/', parameters('FunctionAppName'), '/functions/', parameters('GetCurrentDatetimeUnix_FunctionName'))]"
                 }
               },
               "runAfter": {
