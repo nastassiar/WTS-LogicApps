@@ -5,11 +5,17 @@
     "PollSMSMsgName": {
       "value": "PollSMSMsg"
     },
-    "servicebus_1_Connection_Name": {
+    "ServiceBusConnectionName": {
       "value": "ServiceBusConnection"
     },
     "ProcessSMSMsgsName": {
       "value": "ProcessSMSMsgs"
+    },
+    "PollSMSSurveyName": {
+      "value": "PollSMSSurveys"
+    },
+    "ProcessSMSSurveysName": {
+      "value": "ProcessSMSSurveys"
     }
   }
 }

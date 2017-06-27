@@ -42,15 +42,15 @@
         "description": "Location of the Logic App."
       }
     },
-    "servicebus_1_Connection_Name": {
+    "ServiceBusConnectionName": {
       "type": "string",
       "defaultValue": "servicebus"
     },
-    "servicebus_1_Connection_DisplayName": {
+    "ServiceBusConnectionDisplayName": {
       "type": "string",
       "defaultValue": "ServiceBusConnection"
     },
-    "servicebus_1_connectionString": {
+    "ServiceBusConnectionString": {
       "type": "securestring",
       "metadata": {
         "description": "Azure Service Bus Connection String"
@@ -96,25 +96,105 @@
         "description": "Location of the Logic App."
       }
     },
-    "azureblob_1_Connection_Name": {
+    "BlobStorageConnectionName": {
       "type": "string",
       "defaultValue": "BlobStorageConnection"
     },
-    "azureblob_1_Connection_DisplayName": {
+    "BlobStorageConnectionDisplayName": {
       "type": "string",
       "defaultValue": "BlobStorageConnection"
     },
-    "azureblob_1_accountName": {
+    "BlobStorageAccountName": {
       "type": "string",
       "metadata": {
         "description": "Name of the storage account the connector should use."
       },
       "defaultValue": "funch2xa7vhdst6tqstorage"
     },
-    "azureblob_1_accessKey": {
+    "BlobStorageAccessKey": {
       "type": "securestring",
       "metadata": {
         "description": "Specify a valid primary/secondary storage account access key."
+      }
+    },
+    "PollSMSSurveyName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "metadata": {
+        "description": "Name of the Logic App."
+      }
+    },
+    "PollSMSSurveyLocation": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "allowedValues": [
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "westcentralus",
+        "westus2",
+        "[resourceGroup().location]"
+      ],
+      "metadata": {
+        "description": "Location of the Logic App."
+      }
+    },
+    "ProcessSMSSurveysName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "metadata": {
+        "description": "Name of the Logic App."
+      }
+    },
+    "ProcessSMSSurveysLocation": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "allowedValues": [
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "westcentralus",
+        "westus2",
+        "[resourceGroup().location]"
+      ],
+      "metadata": {
+        "description": "Location of the Logic App."
       }
     }
   },
@@ -126,7 +206,7 @@
       "location": "[parameters('PollSMSMsgLocation')]",
       "apiVersion": "2016-06-01",
       "dependsOn": [
-        "[resourceId('Microsoft.Web/connections', parameters('servicebus_1_Connection_Name'))]"
+        "[resourceId('Microsoft.Web/connections', parameters('ServiceBusConnectionName'))]"
       ],
       "tags": {
         "displayName": "PollSMSMsg"
@@ -360,8 +440,8 @@
             "value": {
               "servicebus_1": {
                 "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', parameters('PollSMSMsgLocation'), '/managedApis/', 'servicebus')]",
-                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('servicebus_1_Connection_Name'))]",
-                "connectionName": "[parameters('servicebus_1_Connection_Name')]"
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('ServiceBusConnectionName'))]",
+                "connectionName": "[parameters('ServiceBusConnectionName')]"
               }
             }
           }
@@ -371,15 +451,15 @@
     {
       "type": "MICROSOFT.WEB/CONNECTIONS",
       "apiVersion": "2016-06-01",
-      "name": "[parameters('servicebus_1_Connection_Name')]",
+      "name": "[parameters('ServiceBusConnectionName')]",
       "location": "[parameters('PollSMSMsgLocation')]",
       "properties": {
         "api": {
           "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', parameters('PollSMSMsgLocation'), '/managedApis/', 'servicebus')]"
         },
-        "displayName": "[parameters('servicebus_1_Connection_DisplayName')]",
+        "displayName": "[parameters('ServiceBusConnectionDisplayName')]",
         "parameterValues": {
-          "connectionString": "[parameters('servicebus_1_ConnectionString')]"
+          "connectionString": "[parameters('ServiceBusConnectionString')]"
         }
       }
     },
@@ -389,7 +469,7 @@
       "location": "[parameters('ProcessSMSMsgsLocation')]",
       "apiVersion": "2016-06-01",
       "dependsOn": [
-        "[resourceId('Microsoft.Web/connections', parameters('azureblob_1_Connection_Name'))]"
+        "[resourceId('Microsoft.Web/connections', parameters('BlobStorageConnectionName'))]"
       ],
       "tags": {
         "displayName": "ProcessSMSMsgs"
@@ -779,8 +859,8 @@
             "value": {
               "azureblob": {
                 "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', parameters('ProcessSMSMsgsLocation'), '/managedApis/', 'azureblob')]",
-                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('azureblob_1_Connection_Name'))]",
-                "connectionName": "[parameters('azureblob_1_Connection_Name')]"
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('BlobStorageConnectionName'))]",
+                "connectionName": "[parameters('BlobStorageConnectionName')]"
               }
             }
           }
@@ -790,16 +870,716 @@
     {
       "type": "MICROSOFT.WEB/CONNECTIONS",
       "apiVersion": "2016-06-01",
-      "name": "[parameters('azureblob_1_Connection_Name')]",
+      "name": "[parameters('BlobStorageConnectionName')]",
       "location": "[parameters('ProcessSMSMsgsLocation')]",
       "properties": {
         "api": {
           "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', parameters('ProcessSMSMsgsLocation'), '/managedApis/', 'azureblob')]"
         },
-        "displayName": "[parameters('azureblob_1_Connection_DisplayName')]",
+        "displayName": "[parameters('BlobStorageConnectionDisplayName')]",
         "parameterValues": {
-          "accountName": "[parameters('azureblob_1_accountName')]",
-          "accessKey": "[parameters('azureblob_1_accessKey')]"
+          "accountName": "[parameters('BlobStorageAccountName')]",
+          "accessKey": "[parameters('BlobStorageAccessKey')]"
+        }
+      }
+    },
+    {
+      "name": "[parameters('PollSMSSurveyName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('PollSMSSurveyLocation')]",
+      "apiVersion": "2016-06-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('ServiceBusConnectionName'))]"
+      ],
+      "tags": {
+        "displayName": "PollSMSSurvey"
+      },
+      "properties": {
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "Condition": {
+              "type": "If",
+              "expression": "@not(empty(body('HTTP')['clients']))",
+              "actions": {
+                "For_each_messages": {
+                  "type": "Foreach",
+                  "foreach": "@body('HTTP')['clients']",
+                  "actions": {
+                    "Send_message": {
+                      "type": "ApiConnection",
+                      "inputs": {
+                        "host": {
+                          "api": {
+                            "runtimeUrl": "https://logic-apis-westeurope.azure-apim.net/apim/servicebus"
+                          },
+                          "connection": {
+                            "name": "@parameters('$connections')['servicebus']['connectionId']"
+                          }
+                        },
+                        "method": "post",
+                        "path": "/@{encodeURIComponent('sms_userstore')}/messages",
+                        "body": {
+                          "ContentData": "@{base64(item())}",
+                          "ContentType": "application/json"
+                        },
+                        "queries": {
+                          "systemProperties": "None"
+                        }
+                      },
+                      "runAfter": {}
+                    }
+                  },
+                  "runAfter": {
+                    "Increment_itemCount": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Increment_itemCount": {
+                  "type": "IncrementVariable",
+                  "inputs": {
+                    "name": "itemCount",
+                    "value": "@length(body('HTTP')['clients'])"
+                  },
+                  "runAfter": {}
+                },
+                "Is_next_page_null": {
+                  "type": "If",
+                  "expression": "@equals(coalesce(body('HTTP')?['next_page'], 999999), 999999)",
+                  "actions": {
+                    "Set_requestCompleted_2": {
+                      "type": "SetVariable",
+                      "inputs": {
+                        "name": "requestCompleted",
+                        "value": 1
+                      },
+                      "runAfter": {}
+                    }
+                  },
+                  "runAfter": {
+                    "For_each_messages": [
+                      "Succeeded"
+                    ]
+                  }
+                }
+              },
+              "runAfter": {
+                "HTTP": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Set_requestCompleted": {
+                    "type": "SetVariable",
+                    "inputs": {
+                      "name": "requestCompleted",
+                      "value": 1
+                    },
+                    "runAfter": {}
+                  }
+                }
+              }
+            },
+            "HTTP": {
+              "type": "Http",
+              "inputs": {
+                "method": "POST",
+                "uri": "https://m-swali-hrd.appspot.com/api/v2/survey_data?page_indexing=0&sid=5769007495905288&auth=@{triggerBody()?['auth']}&eid=@{triggerBody()?['eid']}&password=@{triggerBody()?['password']}&page=@{triggerBody()?['page']}&source=@{triggerBody()?['source']}&since=@{triggerBody()?['since']}&until=@{triggerBody()?['until']}&max=@{triggerBody()?['max']}",
+                "retryPolicy": {
+                  "count": 1,
+                  "interval": "PT30S",
+                  "type": "fixed"
+                }
+              },
+              "runAfter": {
+                "Initialize_nextPage": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_cleanedUpMsg": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "cleanedUpMsg",
+                    "type": "String"
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_requestCompleted": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_itemCount": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "itemCount",
+                    "type": "Integer",
+                    "value": 0
+                  }
+                ]
+              },
+              "runAfter": {}
+            },
+            "Initialize_nextPage": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "nextPage",
+                    "type": "Integer",
+                    "value": 0
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_cleanedUpMsg": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_requestCompleted": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "requestCompleted",
+                    "type": "Integer",
+                    "value": 0
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_itemCount": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Response": {
+              "type": "Response",
+              "inputs": {
+                "statusCode": 200,
+                "headers": {
+                  "content-type": "application/json"
+                },
+                "body": {
+                  "msg_count": "@variables('itemCount')",
+                  "request_completed": "@variables('requestCompleted')"
+                }
+              },
+              "runAfter": {
+                "Condition": [
+                  "Succeeded"
+                ]
+              }
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "manual": {
+              "type": "Request",
+              "kind": "Http",
+              "inputs": {
+                "schema": {
+                  "$schema": "http://json-schema.org/draft-04/schema#",
+                  "definitions": {},
+                  "id": "http://example.com/example.json",
+                  "properties": {
+                    "auth": {
+                      "id": "/properties/auth",
+                      "type": "string"
+                    },
+                    "eid": {
+                      "id": "/properties/eid",
+                      "type": "string"
+                    },
+                    "max": {
+                      "id": "/properties/max",
+                      "type": "integer"
+                    },
+                    "page": {
+                      "id": "/properties/page",
+                      "type": "integer"
+                    },
+                    "password": {
+                      "id": "/properties/password",
+                      "type": "string"
+                    },
+                    "sid": {
+                      "id": "/properties/sid",
+                      "type": "integer"
+                    },
+                    "since": {
+                      "id": "/properties/since",
+                      "type": "integer"
+                    },
+                    "source": {
+                      "id": "/properties/source",
+                      "type": "integer"
+                    },
+                    "until": {
+                      "id": "/properties/until",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "servicebus": {
+                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', parameters('PollSMSSurveyLocation'), '/managedApis/', 'servicebus')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('ServiceBusConnectionName'))]",
+                "connectionName": "[parameters('ServiceBusConnectionName')]"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "[parameters('ProcessSMSSurveysName')]",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('ProcessSMSSurveysLocation')]",
+      "apiVersion": "2016-06-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('BlobStorageConnectionName'))]"
+      ],
+      "tags": {
+        "displayName": "ProcessSMSSurveys"
+      },
+      "properties": {
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "Compose": {
+              "type": "Compose",
+              "inputs": "@base64ToString(body('Get_blob_content').$content)",
+              "runAfter": {
+                "Get_blob_content": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_kenyaRequestCompleted": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "kenyaRequestCompleted",
+                    "type": "Integer",
+                    "value": 0
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_unixLastExecTime": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_requestPageKenya": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "requestPageKenya",
+                    "type": "Integer",
+                    "value": 0
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_tanzaniaRequestCompleted": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_requestPageTanzania": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "requestPageTanzania",
+                    "type": "Integer",
+                    "value": 0
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_requestPageKenya": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_tanzaniaRequestCompleted": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "tanzaniaRequestCompleted",
+                    "type": "Integer",
+                    "value": 0
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_kenyaRequestCompleted": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_totalMsgKenya": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "totalMsgKenya",
+                    "type": "Integer",
+                    "value": 0
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_requestPageTanzania": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_totalMsgTanzania": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "totalMsgTanzania",
+                    "type": "Integer",
+                    "value": 0
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_totalMsgKenya": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Initialize_unixCurrentDatetime": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "unixCurrentDatetime",
+                    "type": "Integer",
+                    "value": 0
+                  }
+                ]
+              },
+              "runAfter": {}
+            },
+            "Initialize_unixLastExecTime": {
+              "type": "InitializeVariable",
+              "inputs": {
+                "variables": [
+                  {
+                    "name": "unixLastExecTime",
+                    "type": "Integer",
+                    "value": 0
+                  }
+                ]
+              },
+              "runAfter": {
+                "Initialize_unixCurrentDatetime": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Set_unixLastExecDatetime": {
+              "type": "SetVariable",
+              "inputs": {
+                "name": "unixLastExecTime",
+                "value": "@int(outputs('Compose'))"
+              },
+              "runAfter": {
+                "Set_variable": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Until": {
+              "type": "Until",
+              "expression": "@equals(variables('kenyaRequestCompleted'), 1)",
+              "limit": {
+                "count": 100,
+                "timeout": "PT1H"
+              },
+              "actions": {
+                "Increment_requestPageKenya": {
+                  "type": "IncrementVariable",
+                  "inputs": {
+                    "name": "requestPageKenya",
+                    "value": 1
+                  },
+                  "runAfter": {
+                    "Increment_totalMsgKenya": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "PollSMSSurveys": {
+                  "type": "Workflow",
+                  "inputs": {
+                    "host": {
+                      "triggerName": "manual",
+                      "workflow": {
+                        "id": "/subscriptions/dc72a57c-74e5-475e-9f09-46f912070bf9/resourceGroups/WellToldStory/providers/Microsoft.Logic/workflows/PollSMSSurveys"
+                      }
+                    },
+                    "body": {
+                      "auth": "*** SPECIFY_AUTH_FOR_KENYA ***",
+                      "eid": "*** SPECIFY_AUTH_FOR_KENYA ***",
+                      "max": 200,
+                      "page": "@variables('requestPageKenya')",
+                      "password": "*** SPECIFY_PASSWORD_FOR_KENYA ***",
+                      "sid": 5769007495905280,
+                      "since": "@variables('unixLastExecTime')",
+                      "source": 5,
+                      "until": "@variables('unixCurrentDatetime')"
+                    }
+                  },
+                  "runAfter": {}
+                },
+                "Increment_totalMsgKenya": {
+                  "type": "IncrementVariable",
+                  "inputs": {
+                    "name": "totalMsgTanzania",
+                    "value": "@int(body('PollSMSSurveys')['msg_count'])"
+                  },
+                  "runAfter": {
+                    "PollSMSSurveys": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Set_kenyaRequestCompleted": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "kenyaRequestCompleted",
+                    "value": "@body('PollSMSSurveys')"
+                  },
+                  "runAfter": {
+                    "Increment_requestPageKenya": [
+                      "Succeeded"
+                    ]
+                  }
+                }
+              },
+              "runAfter": {
+                "Set_unixLastExecDatetime": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Until_2": {
+              "type": "Until",
+              "expression": "@equals(variables('tanzaniaRequestCompleted'), 1)",
+              "limit": {
+                "count": 100,
+                "timeout": "PT1H"
+              },
+              "actions": {
+                "Increment_requestPageTanzania": {
+                  "type": "IncrementVariable",
+                  "inputs": {
+                    "name": "requestPageTanzania",
+                    "value": 1
+                  },
+                  "runAfter": {
+                    "Increment_totalMsgTanzania": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "PollSMSSurveys_2": {
+                  "type": "Workflow",
+                  "inputs": {
+                    "host": {
+                      "triggerName": "manual",
+                      "workflow": {
+                        "id": "/subscriptions/dc72a57c-74e5-475e-9f09-46f912070bf9/resourceGroups/WellToldStory/providers/Microsoft.Logic/workflows/PollSMSSurveys"
+                      }
+                    },
+                    "body": {
+                      "auth": "*** SPECIFY_AUTH_FOR_TANZANIA ***",
+                      "eid": "*** SPECIFY_AUTH_FOR_TANZANIA ***",
+                      "max": 200,
+                      "page": "@variables('requestPageTanzania')",
+                      "password": "*** SPECIFY_PASSWORD_FOR_TANZANIA ***",
+                      "sid": 5665527433265152,
+                      "since": "@variables('unixLastExecTime')",
+                      "source": 5,
+                      "until": "@variables('unixCurrentDatetime')"
+                    }
+                  },
+                  "runAfter": {}
+                },
+                "Increment_totalMsgTanzania": {
+                  "type": "IncrementVariable",
+                  "inputs": {
+                    "name": "totalMsgTanzania",
+                    "value": "@int(body('PollSMSSurveys_2')['msg_count'])"
+                  },
+                  "runAfter": {
+                    "PollSMSSurveys_2": [
+                      "Succeeded"
+                    ]
+                  }
+                },
+                "Set_tanzaniaRequestCompleted": {
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "tanzaniaRequestCompleted",
+                    "value": "@body('PollSMSSurveys_2')"
+                  },
+                  "runAfter": {
+                    "Increment_requestPageTanzania": [
+                      "Succeeded"
+                    ]
+                  }
+                }
+              },
+              "runAfter": {
+                "Set_unixLastExecDatetime": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Get_blob_content": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "api": {
+                    "runtimeUrl": "https://logic-apis-westeurope.azure-apim.net/apim/azureblob"
+                  },
+                  "connection": {
+                    "name": "@parameters('$connections')['azureblob']['connectionId']"
+                  }
+                },
+                "method": "get",
+                "path": "/datasets/default/files/@{encodeURIComponent(encodeURIComponent('L2VjaG8tYXBpLXN0b3JhZ2UvRWNob0FwaS1TdXJ2ZXlMYXN0RXhlY3V0aW9uVGltZQ=='))}/content",
+                "queries": {
+                  "inferContentType": true
+                }
+              },
+              "runAfter": {
+                "Initialize_totalMsgTanzania": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "L2VjaG8tYXBpLXN0b3JhZ2UvRWNob0FwaS1TdXJ2ZXlMYXN0RXhlY3V0aW9uVGltZQ==": "/echo-api-storage/EchoApi-SurveyLastExecutionTime"
+              }
+            },
+            "GetCurrentDatetimeUnix": {
+              "type": "Function",
+              "inputs": {
+                "body": {},
+                "function": {
+                  "id": "/subscriptions/dc72a57c-74e5-475e-9f09-46f912070bf9/resourceGroups/WellToldStory/providers/Microsoft.Web/sites/WTSFunctions-dev/functions/GetCurrentDatetimeUnix"
+                }
+              },
+              "runAfter": {
+                "Compose": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Set_variable": {
+              "type": "SetVariable",
+              "inputs": {
+                "name": "unixCurrentDatetime",
+                "value": "@body('GetCurrentDatetimeUnix')['currentdtInUnixTimeStamp']"
+              },
+              "runAfter": {
+                "GetCurrentDatetimeUnix": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "Create_blob": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "api": {
+                    "runtimeUrl": "https://logic-apis-westeurope.azure-apim.net/apim/azureblob"
+                  },
+                  "connection": {
+                    "name": "@parameters('$connections')['azureblob']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "path": "/datasets/default/files",
+                "queries": {
+                  "folderPath": "/echo-api-storage",
+                  "name": "EchoApi-SurveyLastExecutionTime"
+                },
+                "body": "@variables('unixCurrentDatetime')"
+              },
+              "runAfter": {
+                "Until": [
+                  "Succeeded"
+                ],
+                "Until_2": [
+                  "Succeeded"
+                ]
+              }
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "Recurrence": {
+              "type": "Recurrence",
+              "recurrence": {
+                "frequency": "Hour",
+                "interval": 1
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "azureblob": {
+                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', parameters('ProcessSMSSurveysLocation'), '/managedApis/', 'azureblob')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('BlobStorageConnectionName'))]",
+                "connectionName": "[parameters('BlobStorageConnectionName')]"
+              }
+            }
+          }
         }
       }
     }
