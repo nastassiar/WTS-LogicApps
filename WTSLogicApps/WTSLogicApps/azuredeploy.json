@@ -1362,6 +1362,9 @@
                       "since": "@variables('unixLastExecTime')",
                       "source": 5,
                       "until": "@variables('unixCurrentDatetime')"
+                    },
+                    "retryPolicy": {
+                      "type": "none"
                     }
                   },
                   "runAfter": {}
@@ -1382,7 +1385,7 @@
                   "type": "SetVariable",
                   "inputs": {
                     "name": "kenyaRequestCompleted",
-                    "value": "@body('PollSMSSurveys')"
+                    "value": "@body('PollSMSSurveys')['request_completed']"
                   },
                   "runAfter": {
                     "Increment_requestPageKenya": [
@@ -1432,10 +1435,13 @@
                       "max": 200,
                       "page": "@variables('requestPageTanzania')",
                       "password": "*** SPECIFY_PASSWORD_FOR_TANZANIA ***",
-                      "sid": 5665527433265152,
+                      "sid": 5735258615971840,
                       "since": "@variables('unixLastExecTime')",
                       "source": 5,
                       "until": "@variables('unixCurrentDatetime')"
+                    },
+                    "retryPolicy": {
+                      "type": "none"
                     }
                   },
                   "runAfter": {}
@@ -1456,7 +1462,7 @@
                   "type": "SetVariable",
                   "inputs": {
                     "name": "tanzaniaRequestCompleted",
-                    "value": "@body('PollSMSSurveys_2')"
+                    "value": "@body('PollSMSSurveys_2')['request_completed']"
                   },
                   "runAfter": {
                     "Increment_requestPageTanzania": [
